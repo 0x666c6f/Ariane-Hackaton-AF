@@ -1,4 +1,4 @@
-# ariane
+# Ariane
 
 Projet Github du projet Ariane (objet connecté + Scratch) pour le Hackathon Air France
 
