@@ -1,6 +1,6 @@
 # ariane
 
-Projet Github du projet Ariane (objet connecté + Scratch)
+Projet Github du projet Ariane (objet connecté + Scratch) pour le Hackathon Air France
 
 Dossier Scratch : 
  - contient le code généré en XMl et JS par la plateforme de notre partenaire
