@@ -1,0 +1,5 @@
+<li ng-class="{active: isActive('{{to}}'), 'disabled' : !to}">
+	<a ng-href="{{to ? (to.indexOf('http') == 0 ? '' : '#') + to : undefined}}" target="{{to && to.indexOf('http') == 0 ? '_blank' : '_self'}}">
+		<span ng-transclude></span>
+	</a>
+</li>

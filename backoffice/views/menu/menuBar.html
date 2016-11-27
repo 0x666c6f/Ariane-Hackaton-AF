@@ -1,0 +1,18 @@
+<nav class="navbar navbar-flat bagdss-menu-bar" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type='button' class='navbar-toggle' ng-init='isCollapsed = true' ng-click='isCollapsed = !isCollapsed'>
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#{{home}}" title="Accueil" ng-click="homeButtonClick()">
+				<span class='icon-af icon-af-B-digital-maison-acceuil'></span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" collapse='isCollapsed'>
+			<ul class='nav navbar-nav' ng-transclude></ul>
+		</div>
+	</div>
+</nav>

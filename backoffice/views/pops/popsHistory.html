@@ -1,0 +1,68 @@
+<div class="container">
+
+    <h1>Historique Ariane</h1>
+
+    <div ng-if="pnrInfos">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Flight : {{pnrInfos.flightList[0].number}} - {{pnrInfos.flightList[0].destination}} {{pnrInfos.flightList[0].departureDate}}
+                    <span class="pull-right">PNR : {{pnrInfos.pnr}}</span>
+                </h3>
+            </div>
+            <table class="table table-without-striped-rows">
+                <thead>
+                    <tr class="bgcolor-softgrey color-blueaf">
+                        <th><strong>Passager</strong></th>
+                        <th><strong>Siège</strong></th>
+                        <th><strong>N° de billet</strong></th>
+                        <th><strong>FlyingBlue</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="passenger in pnrInfos.passengerList">
+                        <td>{{passenger.civil}} {{passenger.name}} {{passenger.surname}}</td>
+                        <td>{{passenger.seat || '-'}}</td>
+                        <td>{{passenger.ticketNumber}}</td>
+                        <td>
+                            <span ng-if="passenger.fqtv">
+                                {{passenger.fqtv.level}} - {{passenger.fqtv.number}}
+                            </span>
+                            <span ng-if="!passenger.fqtv">-<span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Historique
+            </h3>
+        </div>
+
+        <ul class="list-group">
+            <li ng-repeat="entry in history"
+                class="list-group-item"
+                ng-class="{'text-right' : entry.from == 'backoffice'}">
+                {{entry.content}}<br/>
+                <small class="extra-small">{{entry.date}} - {{entry.from | uppercase}}</small>
+            </li>
+
+        </ul>
+
+        <form role="form" novalidate ng-submit="sendMessage()">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Envoi message au POPS" ng-model="msgForm.messageText">
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit">Envoyer</button>
+                </span>
+            </div>
+        </form>
+    </div>
+
+</div>

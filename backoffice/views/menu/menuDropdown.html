@@ -1,0 +1,10 @@
+<li dropdown class='dropdown dropdown-fw' ng-class="{active: isDropdownActive(), 'disabled' : isDisabled}">
+	<a href='#' class='dropdown-toggle' dropdown-toggle ng-if="!isDisabled"> 
+		<span ng-bind="title"></span> <span class='caret'></span>
+	</a>
+	<a ng-if="isDisabled">
+		<span ng-bind="title"></span> <span class='caret'></span>
+	</a>
+	<ul class='dropdown-menu' role='menu' ng-transclude>
+	</ul>
+</li>

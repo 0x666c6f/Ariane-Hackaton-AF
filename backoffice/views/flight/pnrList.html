@@ -1,0 +1,73 @@
+<div class="container">
+    <h1>Infos vol</h1>
+
+    <form ng-submit="getPassengerList()" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-2 control-label text-left" for="flightNumber">Numéro de vol</label>
+            <div class="col-xs-2">
+                <input id="flightNumber" type="text" class="form-control" ng-model="flightForm.flightNumber">
+            </div>
+
+            <label class="col-xs-2 control-label text-left" for="date">Date</label>
+            <div class="col-xs-2">
+                <input id="date" type="text" class="form-control" ng-model="flightForm.date">
+            </div>
+
+            <div class="col-xs-4 text-right">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
+    <div ng-if="flightInfo">
+
+        <div class="row">
+            <div class="col-xs-4">
+                <h2>{{flightInfo.number}} - {{flightInfo.scheduledDepartureDate}}</h2>
+            </div>
+            <div class="col-xs-4 text-center">
+                <h2>Estimé : {{flightInfo.estimatedDepartureDate}}</h2>
+            </div>
+            <div class="col-xs-4 text-right title-button">
+                <button class="btn btn-primary" ng-click="startAriane()" ng-disabled="flightInfo.arianeStarted">Démarrer Ariane</button>
+            </div>
+        </div>
+
+        <div ng-if="flightInfo.arianeStarted">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Etat enrollement
+                    </h3>
+                </div>
+                <table class="table table-without-striped-rows">
+                    <thead>
+                        <tr class="bgcolor-softgrey color-blueaf">
+                            <th><strong>PNR</strong></th>
+                            <th><strong>Passagers</strong></th>
+                            <th><strong>Enrollement</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pnr in flightInfo.pnrList">
+                            <td>{{pnr.pnr}}</td>
+                            <td>
+                                <span ng-repeat="pax in pnr.paxList">
+                                    {{pax.name}} {{pax.surname}} <br ng-if="!$last">
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-if="pnr.enrolled == 'mobile'">Mobile <a class="btn btn-default btn-xs" href="#/history">Historique</a></span>
+                                <span ng-if="pnr.enrolled == 'pops'">Pops <a class="btn btn-default btn-xs" href="#/history">Historique</a></span>
+                                <span ng-if="!pnr.enrolled">
+                                    <a class="btn btn-default btn-xs" href="#/enrollPops?seatNumber=24E">Enroller</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</div>

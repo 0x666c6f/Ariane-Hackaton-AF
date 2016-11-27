@@ -1,0 +1,63 @@
+<div class="container">
+    <h1>Enrollement des POPS</h1>
+
+    <form ng-submit="getPassenger()" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-6 control-label text-left" for="seatNumber">Scannez la carte d'embarquement</label>
+            <div class="col-xs-4">
+                <input id="seatNumber" type="text" class="form-control" ng-model="enrollForm.seatNumber">
+            </div>
+        </div>
+    </form>
+
+    <div ng-if="pnrInfos">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Flight : {{pnrInfos.flightList[0].number}} - {{pnrInfos.flightList[0].destination}} {{pnrInfos.flightList[0].departureDate}}
+                    <span class="pull-right">PNR : {{pnrInfos.pnr}}</span>
+                </h3>
+            </div>
+            <table class="table table-without-striped-rows">
+                <thead>
+                    <tr class="bgcolor-softgrey color-blueaf">
+                        <th><strong>Passager</strong></th>
+                        <th><strong>Siège</strong></th>
+                        <th><strong>N° de billet</strong></th>
+                        <th><strong>FlyingBlue</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="passenger in pnrInfos.passengerList">
+                        <td>{{passenger.civil}} {{passenger.name}} {{passenger.surname}}</td>
+                        <td>{{passenger.seat || '-'}}</td>
+                        <td>{{passenger.ticketNumber}}</td>
+                        <td>
+                            <span ng-if="passenger.fqtv">
+                                {{passenger.fqtv.level}} - {{passenger.fqtv.number}}
+                            </span>
+                            <span ng-if="!passenger.fqtv">-<span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form ng-submit="enrollPops()" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-6 control-label text-left" for="popsNumber">Scannez le POPS</label>
+                <div class="col-xs-4">
+                    <input id="popsNumber" type="text" class="form-control" ng-model="enrollForm.popsNumber">
+                </div>
+            </div>
+        </form>
+
+        <div ng-if="enrolled == 'ok'">
+            Enrollement OK !
+        </div>
+        <div ng-if="enrolled == 'failed'">
+            Echec de l'enrollement
+        </div>
+    </div>
+</div>
