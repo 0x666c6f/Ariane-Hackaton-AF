@@ -297,3 +297,26 @@ input[type=text]::-ms-clear {
 .ahl .nav > li > a{
 	padding:10px 2px;
 }
+
+/** Responsive Design **/
+
+@media (max-width: 767px) {
+
+    .afgo-header > div:last-child {
+        line-height: 45px;
+    }
+
+    .afgo-header > div:first-child > .app-title {
+        line-height: 30px;
+        padding-top: 0px;
+    }
+
+    .form-horizontal .control-label {
+        padding-top: 7px;
+    }
+
+    .form-horizontal .form-control {
+        margin-bottom: 10px;
+    }
+
+}

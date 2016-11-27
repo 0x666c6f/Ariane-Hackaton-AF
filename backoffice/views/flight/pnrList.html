@@ -3,17 +3,17 @@
 
     <form ng-submit="getPassengerList()" class="form-horizontal">
         <div class="form-group">
-            <label class="col-xs-2 control-label text-left" for="flightNumber">Numéro de vol</label>
-            <div class="col-xs-2">
+            <label class="col-xs-6 col-sm-3 col-md-2 control-label" for="flightNumber">Numéro de vol</label>
+            <div class="col-xs-6 col-sm-2">
                 <input id="flightNumber" type="text" class="form-control" ng-model="flightForm.flightNumber">
             </div>
 
-            <label class="col-xs-2 control-label text-left" for="date">Date</label>
-            <div class="col-xs-2">
+            <label class="col-xs-4 col-sm-2 control-label" for="date">Date</label>
+            <div class="col-xs-4 col-sm-2">
                 <input id="date" type="text" class="form-control" ng-model="flightForm.date">
             </div>
 
-            <div class="col-xs-4 text-right">
+            <div class="col-xs-4 col-sm-3 col-md-4 text-right">
                 <button type="submit" class="btn btn-primary">Rechercher</button>
             </div>
         </div>
