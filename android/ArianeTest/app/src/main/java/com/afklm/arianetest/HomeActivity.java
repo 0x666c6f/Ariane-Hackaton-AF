@@ -3,10 +3,12 @@ package com.afklm.arianetest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +19,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 public class HomeActivity extends AppCompatActivity {
+
+    SharedPreferences notificationPreferences;
+    SharedPreferences.OnSharedPreferenceChangeListener notificationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,19 @@ public class HomeActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        String currentToken = FirebaseInstanceId.getInstance().getToken();
+        Log.i("ARIANEFIREBASE", "current token: " + currentToken);
+
+        notificationPreferences = getSharedPreferences(ArianePushMessagingService.PUSH_LAST_PREFERENCE, Context.MODE_PRIVATE);
+        notificationListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (notificationPreferences.getAll().size() > 0) {
+                    testPushReceived();
+                }
+            }
+        };
     }
 
     @Override
@@ -66,12 +86,21 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+
+        // Notification has been received when app was inactive
+        if (notificationPreferences.getAll().size() > 0) {
+            testPushReceived();
+        }
+
+        notificationPreferences.registerOnSharedPreferenceChangeListener(notificationListener);
     }
 
     @Override
     protected void onPause() {
+        notificationPreferences.unregisterOnSharedPreferenceChangeListener(notificationListener);
+
         super.onPause();
 
         ActivityManager activityManager = (ActivityManager) getApplicationContext()
@@ -96,12 +125,12 @@ public class HomeActivity extends AppCompatActivity {
 
     /* ACTION METHODS */
 
-    private void testVibrator() {
+    public void testVibrator() {
         Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(new long[] { 0, 1000, 500, 1000, 500, 1000 }, -1);
     }
 
-    private void testNotification() {
+    public void testNotification() {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -109,5 +138,22 @@ public class HomeActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("NOTIFICATION", "Unable to play ringtone", e);
         }
+    }
+
+    public void testPushReceived() {
+
+        PowerManager powerManager = (PowerManager)getSystemService(POWER_SERVICE);
+        PowerManager.WakeLock wakeUp = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ARIANE_WAKEUP");
+
+        wakeUp.acquire();
+
+        testNotification();
+        testVibrator();
+
+        Snackbar.make(findViewById(R.id.homeMainView), notificationPreferences.getString("flightNumber", "test"), Snackbar.LENGTH_LONG).show();
+
+        wakeUp.release();
+
+        notificationPreferences.edit().clear().commit();
     }
 }
