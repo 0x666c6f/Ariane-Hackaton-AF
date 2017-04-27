@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ariane</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_test_vibrator">Test vibreur</string>
+    <string name="action_test_notification">Test notif.</string>
+    <string name="ariane_welcome">Ariane vous accompagne pendant toute la durée de votre vol pertubé. Que voulez-vous faire ?</string>
+</resources>
